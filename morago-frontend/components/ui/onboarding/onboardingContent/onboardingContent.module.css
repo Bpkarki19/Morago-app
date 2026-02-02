@@ -1,0 +1,109 @@
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+
+
+}
+
+.container::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.4) 30%,
+            rgba(0, 0, 0, 0.8) 70%,
+            rgba(0, 0, 0, 0.95) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+.decoration {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    z-index: 2;
+    border-radius: 50%;
+    background-color: orange;
+}
+
+
+.decorationLeft {
+    left: -30px;
+
+}
+
+.decorationRight {
+    right: -30px;
+}
+
+.skipButton {
+    position: absolute;
+    top: 40px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: #A7A9B7;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    z-index: 3;
+    padding: 10px;
+    outline: none;
+}
+
+.skipButton:focus {
+    outline: none;
+}
+
+.textOverlay {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 130%;
+    letter-spacing: 0;
+    color: white;
+}
+
+.description {
+    width: 327px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 180%;
+    text-align: center;
+    color: white;
+}
+
+.buttonGroup {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 20px;
+    gap: 12px;
+
+}
