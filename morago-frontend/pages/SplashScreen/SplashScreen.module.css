@@ -1,0 +1,71 @@
+.splashScreenContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 375px;
+    height: 648px;
+    justify-content: center;
+    background-color: #015F76;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}
+
+.loadingContainer {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 35px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 24px;
+    gap: 8px;
+}
+
+.loadingContainer>div {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    animation: pulse 1.2s infinite ease-in-out both;
+}
+
+.dot1 {
+    background-color: #00A9BC;
+    animation-delay: 0s !important;
+}
+
+.dot2 {
+    background-color: #E94E34;
+    animation-delay: 0.2s !important;
+}
+
+.dot3 {
+    background-color: #F6A704;
+    animation-delay: 0.4s !important;
+}
+
+.loadingText {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    font-family: sans-serif;
+    letter-spacing: 0.5px;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(0.85);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+}

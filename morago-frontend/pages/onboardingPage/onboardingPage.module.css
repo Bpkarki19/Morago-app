@@ -1,0 +1,9 @@
+.pageWrapper{
+    display: flex;
+    flex-direction: column;
+    width: 375px;
+    height: 648px;
+    
+    padding-bottom: 20px;
+    justify-content: flex-end;
+}
