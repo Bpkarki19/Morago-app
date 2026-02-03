@@ -1,6 +1,6 @@
-import bg1 from '../../../../src/assets/bg-1.png';
-import bg2 from '../../../../src/assets/bg-2.png';
-import bg3 from '../../../../src/assets/bg-3.png';
+import bg1 from '../../../../assets/bg-1.png';
+import bg2 from '../../../../assets/bg-2.png';
+import bg3 from '../../../../assets/bg-3.png';
 
 export const slides = [
     {

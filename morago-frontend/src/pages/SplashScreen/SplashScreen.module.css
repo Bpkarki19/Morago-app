@@ -1,10 +1,15 @@
 .splashScreenContainer {
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 375px;
-    height: 648px;
+    width: 100%;
+    max-width: 430px;
+
+    height: 100dvh;
+    max-height: 932px;
     justify-content: center;
+
     background-color: #015F76;
     position: fixed;
     top: 50%;
@@ -14,8 +19,9 @@
 }
 
 .loadingContainer {
-    width: 120px;
-    height: 120px;
+    width: clamp(100px, 30vw, 120px);
+    /* Scales between 100px and 120px based on screen */
+    height: clamp(100px, 30vw, 120px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,7 +56,8 @@
 
 .loadingText {
     color: white;
-    font-size: 24px;
+    font-size: clamp(20px, 5vw, 24px);
+    /* Scales font size slightly for smaller screens */
     font-weight: 700;
     font-family: sans-serif;
     letter-spacing: 0.5px;
