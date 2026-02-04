@@ -1,6 +1,6 @@
-import styles from './onboardingPage.module.css';
-import { OnboardingContent } from '../../components/ui/onboarding/onboardingContent/OnboardingContent';
-import { slides } from '../../components/ui/onboarding/slides/slides';
+import styles from './OnboardingPage.module.css';
+import { OnboardingContent } from '../../components/ui/Onboarding/OnboardingContent/OnboardingContent';
+import { slides } from '../../components/ui/Onboarding/slides/slides';
 import { useState } from 'react';
 
 export const OnboardingPage = () => {
@@ -13,6 +13,7 @@ export const OnboardingPage = () => {
                 title={slides[currentStep].title}
                 description={slides[currentStep].description}
                 currentStep={currentStep}
+                totalSteps={slides.length}
                 decorations={slides[currentStep].decorations}
                 onStepChange={setCurrentStep}
                 onSkip={() => console.log("Skip clicked")}

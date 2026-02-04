@@ -29,8 +29,6 @@
     "noUncheckedSideEffectImports": true
   },
   "include": [
-    "src",
-    "pages",
-    "components"
+    "src"
   ]
 }

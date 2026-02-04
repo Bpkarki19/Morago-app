@@ -1,13 +1,14 @@
-import styles from "./onboardingContent.module.css"
+import styles from "./OnboardingContent.module.css"
 import { Button } from "../../Button/Button"
 import { StepsIndicator } from "../StepIndicator/StepIndicator"
-import { slides } from "../slides/slides"
+
 
 interface Props {
   image: string
   title: string
   description: string
   currentStep: number
+  totalSteps: number
   decorations?: {
     left: {
       color: string;
@@ -22,7 +23,7 @@ interface Props {
   onSkip?: () => void
 }
 
-export const OnboardingContent = ({ title, description, image, currentStep, decorations, onStepChange, onSkip }: Props) => {
+export const OnboardingContent = ({ title, description, image, currentStep, totalSteps, decorations, onStepChange, onSkip }: Props) => {
   return (
     <div className={styles.container}>
       <img src={image} alt={title} className={styles.image} />
@@ -47,7 +48,7 @@ export const OnboardingContent = ({ title, description, image, currentStep, deco
       <div className={styles.textOverlay}>
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.description}>{description}</p>
-        <StepsIndicator totalSteps={slides.length} currentSteps={currentStep} onStepClick={onStepChange} />
+        <StepsIndicator totalSteps={totalSteps} currentSteps={currentStep} onStepClick={onStepChange} />
         <div className={styles.buttonGroup}>
           <Button variant="green" text="Log in " onClick={() => { }} />
           <Button variant="white" text="sign up " onClick={() => { }} />

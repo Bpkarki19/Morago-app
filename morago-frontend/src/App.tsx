@@ -1,8 +1,8 @@
 import './App.css'
-import { SplashScreen } from '../pages/SplashScreen/SplashScreen';
-import { OnboardingPage } from '../pages/onboardingPage/onboardingPage';
+import { SplashScreen } from './pages/SplashScreen/SplashScreen';
+import { OnboardingPage } from './pages/OnboardingPage/OnboardingPage';
 import { useState, useEffect } from 'react';
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
