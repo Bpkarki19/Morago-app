@@ -1,9 +1,9 @@
 import styles from './button.module.css';
 interface ButtonsProps {
 
-    variant: 'green' | 'white';
+    variant: 'green' | 'white' | 'orange' | 'grey';
     text: string;
-    onClick: () => void; //takes no input and return notthing
+    onClick?: () => void; //takes no input and return notthing
     type?: 'button' | 'submit';
 }
 

@@ -1,14 +1,25 @@
-.button{
+.button {
     width: 327px;
     height: 56px;
     border-radius: 30px;
 }
 
-.green{
+.green {
     background-color: #015F76;
     color: white;
 }
-.white{
-    background-color:#F8F9FB;
+
+.white {
+    background-color: #F8F9FB;
+    color: black;
+}
+
+.orange {
+    background-color: #FF9900;
+    color: white;
+}
+
+.grey {
+    background-color: #E5E5E5;
     color: black;
 }
