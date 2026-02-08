@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom'
 import { LoginPage } from './pages/LoginPage/LoginPage';
 import { HomePage } from './pages/HomePage/HomePage';
+import { SignupPage } from './pages/SignupPage/SignupPage';
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -27,6 +28,7 @@ function App() {
         <Route path="/" element={<OnboardingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/signup" element={<SignupPage />} />
       </Routes>
     </div>
   )

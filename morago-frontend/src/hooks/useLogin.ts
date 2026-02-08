@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LoginSchema } from '../schemas/LoginSchema';
+import { LoginSchema } from '../schemas/Schema';
 import { useNavigate } from 'react-router-dom';
 import { loginRequest } from '../api/auth';
 import { isAxiosError } from 'axios';

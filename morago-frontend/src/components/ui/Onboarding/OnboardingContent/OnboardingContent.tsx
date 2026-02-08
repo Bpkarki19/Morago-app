@@ -61,7 +61,7 @@ export const OnboardingContent = ({
         <StepsIndicator totalSteps={totalSteps} currentSteps={currentStep} onStepClick={onStepChange} />
         <div className={styles.buttonGroup}>
           <Button variant="green" text="Log in " onClick={() => { navigate('/login') }} />
-          <Button variant="white" text="sign up " onClick={() => { navigate('/login') }} />
+          <Button variant="white" text="sign up " onClick={() => { navigate('/signup') }} />
         </div>
       </div>
     </div>

@@ -13,7 +13,24 @@
     justify-content: flex-start;
 }
 
-/* Ensure all children (inputs, buttons) take full width of the 430px */
+.roleSelection {
+    display: flex;
+    background-color: #f8f9fb;
+    border-radius: 40px;
+    padding: 6px;
+    margin-bottom: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.roleSelection :global(.button) {
+    flex: 1;
+    width: auto;
+    height: 48px;
+    border-radius: 36px;
+}
+
+
 .container>* {
     width: 100%;
 }
@@ -48,22 +65,7 @@ p {
     gap: 24px;
 }
 
-.roleSelection {
-    display: flex;
-    background-color: #f8f9fb;
-    border-radius: 40px;
-    padding: 6px;
-    margin-bottom: 8px;
-    width: 100%;
-    box-sizing: border-box;
-}
 
-.roleSelection :global(.button) {
-    flex: 1;
-    width: auto;
-    height: 48px;
-    border-radius: 36px;
-}
 
 .inputGroup {
     display: flex;
@@ -104,10 +106,6 @@ p {
     background-color: #fff;
 }
 
-.inputWrapper input.error {
-    border-color: #ff4d4f;
-}
-
 .icon {
     position: absolute;
     left: 16px;
@@ -130,22 +128,7 @@ p {
     width: 100%;
 }
 
-.forgotPassword {
-    background: none;
-    border: none;
-    color: #8e8e8e;
-    font-size: 14px;
-    margin-top: 16px;
-    cursor: pointer;
-    align-self: center;
-    position: relative;
-    display: flex;
-    justify-content: center;
-}
 
-.forgotPassword:focus {
-    outline: none;
-}
 
 .bottomLine {
     content: "";
@@ -165,4 +148,14 @@ p {
     font-size: 12px;
     margin-top: 4px;
     margin-bottom: 0;
+}
+
+footer {
+    color: #A7A9B7;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+    align-items: center;
+    text-align: center;
 }
