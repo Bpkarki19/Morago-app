@@ -5,7 +5,7 @@ import useSignup from "../../hooks/useSignup";
 import { useState } from "react";
 
 export const SignupPage = () => {
-    const { register, onSubmit, errors, isSubmitting, serverError: error } = useSignup();
+    const { register, onSubmit, errors, isSubmitting, setValue, serverError: error } = useSignup();
     const [role, setRole] = useState<'ROLE_USER' | 'ROLE_TRANSLATOR'>("ROLE_TRANSLATOR");
     return (
         <div className={styles.container}>
@@ -16,18 +16,25 @@ export const SignupPage = () => {
             </header>
 
             <form className={styles.form} onSubmit={onSubmit}>
+                <input type="hidden" value={role} {...register("role")} />
                 <div className={styles.roleSelection} role="group">
                     <Button
                         type="button"
                         variant={role === 'ROLE_USER' ? 'orange' : 'white'}
                         text="I am a user"
-                        onClick={() => setRole('ROLE_USER')}
+                        onClick={() => {
+                            setRole('ROLE_USER');
+                            setValue('role', 'ROLE_USER');
+                        }}
                     />
                     <Button
                         type="button"
                         variant={role === 'ROLE_TRANSLATOR' ? 'orange' : 'white'}
                         text="I am a translator"
-                        onClick={() => setRole('ROLE_TRANSLATOR')}
+                        onClick={() => {
+                            setRole('ROLE_TRANSLATOR');
+                            setValue('role', 'ROLE_TRANSLATOR');
+                        }}
                     />
                 </div>
 

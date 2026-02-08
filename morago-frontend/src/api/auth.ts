@@ -17,7 +17,7 @@ export const loginRequest = async (credentials: LoginSchema) => {
     return response.data;
 };
 
-
+//(credentials: Omit<SignupSchema, "confirmPassword">)
 export const signupRequest = async (credentials: SignupSchema) => {
     // Axios returns the data directly in the 'data' property
     const response = await apiClient.post("/auth/register", credentials);

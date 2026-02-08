@@ -13,6 +13,7 @@ const useSignup = () => {
     const {
         register,
         handleSubmit,
+        setValue,
         formState: { errors, isSubmitting }
     } = useForm<SignupSchema>({
         resolver: zodResolver(SignupSchema),
@@ -20,7 +21,7 @@ const useSignup = () => {
             phone: "",
             password: "",
             confirmPassword: "",
-            role: ""
+            role: "ROLE_USER"
         }
     });
 
@@ -45,7 +46,8 @@ const useSignup = () => {
         errors,
         isSubmitting,
         error,
-        serverError: error
+        serverError: error,
+        setValue
     }
 };
 

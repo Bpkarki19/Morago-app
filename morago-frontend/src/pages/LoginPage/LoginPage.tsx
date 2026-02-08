@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Button } from "../../components/ui/Button/Button";
 import styles from "./LoginPage.module.css";
+import { useNavigate } from "react-router-dom";
 import { useLogin } from "../../hooks/useLogin";
 
 export const LoginPage = () => {
     const { register, onSubmit, errors, isSubmitting, serverError: error } = useLogin();
+    const navigate = useNavigate();
 
     const [role, setRole] = useState<'user' | 'translator'>('user');
 
@@ -33,6 +35,7 @@ export const LoginPage = () => {
                 </div>
 
                 <div className={styles.inputGroup}>
+                    {/* phone number */}
                     <label htmlFor="phone">Phone number</label>
                     <div className={styles.inputWrapper}>
                         <span className={styles.icon}>
@@ -52,6 +55,7 @@ export const LoginPage = () => {
                 </div>
 
                 <div className={styles.inputGroup}>
+                    {/* password */}
                     <label htmlFor="password">Password</label>
                     <div className={styles.inputWrapper}>
                         <span className={styles.icon}>
@@ -69,6 +73,9 @@ export const LoginPage = () => {
                     {errors.password && <p className={styles.errorText}>{errors.password.message}</p>}
                 </div>
 
+
+                {/* <input type="hidden" value={role} {...register("role")} /> */}
+                {/* Login and register buttons */}
                 <div className={styles.actions}>
                     <Button
                         type="submit"
@@ -76,12 +83,14 @@ export const LoginPage = () => {
                         text={isSubmitting ? "Logging in..." : "Log in"}
 
                     />
-                    <Button type="submit" variant="white" text="Register" />
+                    {/* register button */}
+                    <Button type="button" variant="white" text="Register" onClick={() => navigate("/signup")} />
                 </div>
-
+                {/* forgot password button */}
                 <button
-                    type="submit"
-                    className={styles.forgotPassword}>
+                    type="button"
+                    className={styles.forgotPassword}
+                    onClick={() => navigate("/forgot-password")}>
                     Forgot password
                 </button>
                 <div className={styles.bottomLine}></div>

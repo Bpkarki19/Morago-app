@@ -18,7 +18,7 @@ export const SignupSchema = z.object({
     phone: phoneSchema,
     password: passwordSchema,
     confirmPassword: z.string(),
-    role: z.string()
+    role: z.enum(["ROLE_USER", "ROLE_TRANSLATOR"])//making sure it exists!
 }).refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
