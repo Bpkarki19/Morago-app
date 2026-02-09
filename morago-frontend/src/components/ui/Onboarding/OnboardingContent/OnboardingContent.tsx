@@ -1,6 +1,7 @@
 import styles from "./OnboardingContent.module.css"
 import { Button } from "../../Button/Button"
 import { StepsIndicator } from "../StepIndicator/StepIndicator"
+import { useNavigate } from "react-router-dom"
 
 
 interface Props {
@@ -23,7 +24,16 @@ interface Props {
   onSkip?: () => void
 }
 
-export const OnboardingContent = ({ title, description, image, currentStep, totalSteps, decorations, onStepChange, onSkip }: Props) => {
+export const OnboardingContent = ({
+  title,
+  description,
+  image,
+  currentStep,
+  totalSteps,
+  decorations,
+  onStepChange,
+  onSkip }: Props) => {
+  const navigate = useNavigate();
   return (
     <div className={styles.container}>
       <img src={image} alt={title} className={styles.image} />
@@ -50,8 +60,8 @@ export const OnboardingContent = ({ title, description, image, currentStep, tota
         <p className={styles.description}>{description}</p>
         <StepsIndicator totalSteps={totalSteps} currentSteps={currentStep} onStepClick={onStepChange} />
         <div className={styles.buttonGroup}>
-          <Button variant="green" text="Log in " onClick={() => { }} />
-          <Button variant="white" text="sign up " onClick={() => { }} />
+          <Button variant="green" text="Log in " onClick={() => { navigate('/login') }} />
+          <Button variant="white" text="sign up " onClick={() => { navigate('/login') }} />
         </div>
       </div>
     </div>
