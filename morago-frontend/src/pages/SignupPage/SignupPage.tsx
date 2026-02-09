@@ -1,41 +1,44 @@
-import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "../../components/ui/Button/Button";
-import styles from "./LoginPage.module.css";
-import { useNavigate } from "react-router-dom";
-import { useLogin } from "../../hooks/useLogin";
+import styles from "./SignupPage.module.css";
+import useSignup from "../../hooks/useSignup";
+import { useState } from "react";
 
-export const LoginPage = () => {
-    const { register, onSubmit, errors, isSubmitting, serverError: error } = useLogin();
-    const navigate = useNavigate();
-
-    const [role, setRole] = useState<'user' | 'translator'>('user');
-
+export const SignupPage = () => {
+    const { register, onSubmit, errors, isSubmitting, setValue, serverError: error } = useSignup();
+    const [role, setRole] = useState<'ROLE_USER' | 'ROLE_TRANSLATOR'>("ROLE_USER");
     return (
         <div className={styles.container}>
             <header className={styles.header}>
-                <h1>Log in</h1>
-                <p>Log in to take advantage of all <br /> the app's features</p>
+                <h1>User <br /> Registration</h1>
+                <p>Register to access all the benefits of the app</p>
                 {error && <p className={styles.errorText}>{error}</p>}
             </header>
 
             <form className={styles.form} onSubmit={onSubmit}>
+                <input type="hidden" value={role} {...register("role")} />
                 <div className={styles.roleSelection} role="group">
                     <Button
                         type="button"
-                        variant={role === 'user' ? 'orange' : 'white'}
+                        variant={role === 'ROLE_USER' ? 'orange' : 'white'}
                         text="I am a user"
-                        onClick={() => setRole('user')}
+                        onClick={() => {
+                            setRole('ROLE_USER');
+                            setValue('role', 'ROLE_USER');
+                        }}
                     />
                     <Button
                         type="button"
-                        variant={role === 'translator' ? 'orange' : 'white'}
+                        variant={role === 'ROLE_TRANSLATOR' ? 'orange' : 'white'}
                         text="I am a translator"
-                        onClick={() => setRole('translator')}
+                        onClick={() => {
+                            setRole('ROLE_TRANSLATOR');
+                            setValue('role', 'ROLE_TRANSLATOR');
+                        }}
                     />
                 </div>
 
                 <div className={styles.inputGroup}>
-                    {/* phone number */}
                     <label htmlFor="phone">Phone number</label>
                     <div className={styles.inputWrapper}>
                         <span className={styles.icon}>
@@ -45,7 +48,7 @@ export const LoginPage = () => {
                             id="phone"
                             type="tel"
                             autoComplete="tel"
-                            placeholder="Enter your phone number"
+                            placeholder="Enter your phone number without '-'"
                             {...register("phone")}
                             className={errors.phone ? styles.error : ""}
                         />
@@ -55,7 +58,6 @@ export const LoginPage = () => {
                 </div>
 
                 <div className={styles.inputGroup}>
-                    {/* password */}
                     <label htmlFor="password">Password</label>
                     <div className={styles.inputWrapper}>
                         <span className={styles.icon}>
@@ -68,31 +70,39 @@ export const LoginPage = () => {
                             placeholder="Enter your password"
                             className={errors.password ? styles.error : ""}
                         />
-
                     </div>
                     {errors.password && <p className={styles.errorText}>{errors.password.message}</p>}
                 </div>
 
+                <div className={styles.inputGroup}>
+                    <label htmlFor="confirmPassword">Confirm Password</label>
+                    <div className={styles.inputWrapper}>
+                        <span className={styles.icon}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        </span>
+                        <input
+                            {...register("confirmPassword")}
+                            id="confirmPassword"
+                            type="password"
+                            placeholder="repeat again"
+                            className={errors.confirmPassword ? styles.error : ""}
+                        />
+                    </div>
+                    {errors.confirmPassword && <p className={styles.errorText}>{errors.confirmPassword.message}</p>}
+                </div>
 
-                {/* <input type="hidden" value={role} {...register("role")} /> */}
-                {/* Login and register buttons */}
                 <div className={styles.actions}>
                     <Button
                         type="submit"
-                        variant="green"
-                        text={isSubmitting ? "Logging in..." : "Log in"}
-
+                        variant="orange"
+                        text={isSubmitting ? "Signing up..." : "Register"}
                     />
-                    {/* register button */}
-                    <Button type="button" variant="white" text="Register" onClick={() => navigate("/signup")} />
                 </div>
-                {/* forgot password button */}
-                <button
-                    type="button"
-                    className={styles.forgotPassword}
-                    onClick={() => navigate("/forgot-password")}>
-                    Forgot password
-                </button>
+                <footer>
+                    <p>Already have an account? <Link to="/login" style={{ color: '#ff9900', fontWeight: 'bold', textDecoration: 'none' }}>Log in</Link></p>
+                    <p>By clicking the button, you consent to the <br />processing of your personal data</p>
+                </footer>
+
                 <div className={styles.bottomLine}></div>
             </form>
         </div>
