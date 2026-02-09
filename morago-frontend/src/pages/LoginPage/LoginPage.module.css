@@ -104,10 +104,6 @@ p {
     background-color: #fff;
 }
 
-.inputWrapper input.error {
-    border-color: #ff4d4f;
-}
-
 .icon {
     position: absolute;
     left: 16px;

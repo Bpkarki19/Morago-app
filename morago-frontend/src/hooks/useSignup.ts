@@ -21,7 +21,7 @@ const useSignup = () => {
             phone: "",
             password: "",
             confirmPassword: "",
-            role: "ROLE_USER"
+            role: "ROLE_USER"//default role
         }
     });
 

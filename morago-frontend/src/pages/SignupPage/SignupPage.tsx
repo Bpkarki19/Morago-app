@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export const SignupPage = () => {
     const { register, onSubmit, errors, isSubmitting, setValue, serverError: error } = useSignup();
-    const [role, setRole] = useState<'ROLE_USER' | 'ROLE_TRANSLATOR'>("ROLE_TRANSLATOR");
+    const [role, setRole] = useState<'ROLE_USER' | 'ROLE_TRANSLATOR'>("ROLE_USER");
     return (
         <div className={styles.container}>
             <header className={styles.header}>
