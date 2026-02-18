@@ -1,9 +1,10 @@
 import apiClient from "./apiClient";
-import { LoginSchema, SignupSchema } from "../schemas/Schema";
+import { ChangePasswordSchema, LoginSchema, SignupSchema } from "../schemas/Schema";
 import { z } from "zod";
 
 export type LoginInput = z.infer<typeof LoginSchema>;
 export type SignupInput = z.infer<typeof SignupSchema>;
+export type ChangePasswordInput = z.infer<typeof ChangePasswordSchema>;
 
 export interface AuthResponse {
     token: string;
@@ -21,5 +22,85 @@ export const loginRequest = async (credentials: LoginSchema) => {
 export const signupRequest = async (credentials: SignupSchema) => {
     // Axios returns the data directly in the 'data' property
     const response = await apiClient.post("/auth/register", credentials);
+    return response.data;
+};
+
+export const getTopicsRequest = async () => {
+    const response = await apiClient.get("/profile/themes");
+    return response.data;
+};
+
+export const getRecentCallsRequest = async () => {
+    try {
+        const response = await apiClient.get("/profile/themes/recent-calls",
+            {
+                params: {
+                    page: 0,
+                    size: 5,
+                    sortBy: 'id',
+                    sortDirection: 'ASC'
+                }
+            });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching recent calls:", error);
+        throw error;
+    }
+
+};
+
+
+export const changePasswordRequest = async (credentials: ChangePasswordSchema) => {
+    const response = await apiClient.post("/profile/password/update", credentials);
+    return response.data;
+};
+
+export const getAvailableTranslatorsRequest = async () => {
+    const response = await apiClient.get("/user/translators",
+        {
+            params: {
+                page: 0,
+                size: 6,
+                sortBy: 'id',
+                sortDirection: 'ASC'
+            }
+        }
+    );
+    return response.data;
+};
+
+export const getTranslatorByIdRequest = async (id: number) => {
+    const response = await apiClient.get(`/user/translators/${id}`);
+    return response.data;
+};
+
+export const postDepositRequest = async (accountHolder: string, nameOfBank: string, won: number) => {
+    const response = await apiClient.post("/user/deposit", {
+        accountHolder,
+        nameOfBank,
+        won
+    });
+    return response.data;
+};
+
+export const getBalanceRequest = async () => {
+    const response = await apiClient.get("/profile/balance");
+    return response.data;
+};
+
+export const updateProfileRequest = async (firstName: string, lastName: string) => {
+    const response = await apiClient.put("/user", { firstName, lastName });
+    return response.data;
+};
+
+export const getNotificationRequest = async () => {
+    const response = await apiClient.get("/profile/notifications", {
+        params: {
+            page: 0,
+            size: 5,
+            sortBy: 'id',
+            sortDirection: 'ASC'
+        }
+    });
     return response.data;
 };

@@ -18,11 +18,21 @@ export const SignupSchema = z.object({
     phone: phoneSchema,
     password: passwordSchema,
     confirmPassword: z.string(),
-    role: z.enum(["ROLE_USER", "ROLE_TRANSLATOR"])//making sure it exists!
+    role: z.enum(["ROLE_USER", "ROLE_TRANSLATOR"])//it exists!
 }).refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
 });
+export const ChangePasswordSchema = z.object({
+    oldPassword: passwordSchema,
+    newPassword: passwordSchema,
+    confirmPassword: z.string().trim(),
+}).refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+});
+
 //export types
 export type LoginSchema = z.infer<typeof LoginSchema>;
 export type SignupSchema = z.infer<typeof SignupSchema>;
+export type ChangePasswordSchema = z.infer<typeof ChangePasswordSchema>;

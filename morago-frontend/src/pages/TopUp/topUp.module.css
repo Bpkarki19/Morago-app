@@ -1,0 +1,176 @@
+.topUpContainer {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    background-color: white;
+    padding: 24px;
+    gap: 24px;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.bankCard {
+    background-color: #015f76;
+    border-radius: 16px;
+    padding: 24px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+    min-height: 180px;
+}
+
+.cardNumberRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    gap: 12px;
+}
+
+.cardNumber {
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.copyButton {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.bankName {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.inputSection {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111;
+}
+
+.inputWrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 0 16px;
+    height: 56px;
+    background-color: white;
+}
+
+.inputIcon {
+    margin-right: 12px;
+    color: #111;
+}
+
+.inputWrapper input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 16px;
+    color: #111;
+}
+
+.inputWrapper input::placeholder {
+    color: #999;
+}
+
+.amountGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.amountOption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: white;
+}
+
+.amountOption.active {
+    border-color: #111;
+}
+
+.amountLeft {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.coinIcon {
+    width: 32px;
+    height: 32px;
+    background-color: #ff9900;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.amountText {
+    font-size: 16px;
+    font-weight: 500;
+    color: #111;
+}
+
+.checkIcon {
+    color: #111;
+}
+
+.submitButton {
+    background-color: #015f76;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    height: 60px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 24px;
+    width: 100%;
+}
+
+.supportLink {
+    text-align: center;
+    color: #999;
+    font-size: 16px;
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.errorText {
+    color: #dc2626;
+    font-size: 14px;
+    margin-top: 4px;
+}

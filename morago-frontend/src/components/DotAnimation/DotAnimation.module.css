@@ -1,0 +1,42 @@
+.dotsContainer {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    animation: pulse 1.2s infinite ease-in-out both;
+}
+
+.dot1 {
+    background-color: #00A9BC;
+    animation-delay: 0s;
+}
+
+.dot2 {
+    background-color: #E94E34;
+    animation-delay: 0.2s;
+}
+
+.dot3 {
+    background-color: #F6A704;
+    animation-delay: 0.4s;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(0.85);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+}
