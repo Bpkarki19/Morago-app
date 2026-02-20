@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import styles from "./topUp.module.css";
 import { useState } from "react";
 import { postDepositRequest } from "../../api/auth";
+import { Modal } from "../../components/ui/Modal/Modal";
+import { useModal } from "../../hooks/useModal";
 
 
 interface TopUpFormData {
@@ -20,6 +22,7 @@ const AMOUNTS = [
 
 export const TopUp = () => {
     const [selectedAmount, setSelectedAmount] = useState(0);
+    const { modalState, showError, showInfo, closeModal } = useModal();
     const {
         register,
         handleSubmit,
@@ -35,7 +38,7 @@ export const TopUp = () => {
 
     const onSubmit = async (data: TopUpFormData) => {
         if (selectedAmount === 0) {
-            alert("Please select an amount to top up.");
+            showError("Please select an amount to top up.", "Amount Required");
             return;
         }
 
@@ -51,11 +54,21 @@ export const TopUp = () => {
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText("1234 5678 9101 1234");
-        alert("Account number copied!");
+        showInfo("Account number copied to clipboard!", "Copied");
     };
 
     return (
         <div className={styles.topUpContainer}>
+            {/* Modal for alert */}
+            <Modal
+                isOpen={modalState.isOpen}
+                onClose={closeModal}
+                type={modalState.type}
+                title={modalState.title}
+                message={modalState.message}
+                confirmLabel={modalState.confirmLabel}
+            />
+
             <div className={styles.bankCard}>
                 <div className={styles.cardNumberRow}>
                     <span className={styles.cardNumber}>1234 5678 9101 1234</span>

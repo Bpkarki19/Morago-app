@@ -4,12 +4,15 @@ import { ArrowLeft, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { updateProfileRequest } from "../../api/auth";
+import { Modal } from "../../components/ui/Modal/Modal";
+import { useModal } from "../../hooks/useModal";
 
 export const EditProfile = () => {
     const navigate = useNavigate();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const { modalState, showError, closeModal } = useModal();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -19,7 +22,7 @@ export const EditProfile = () => {
             navigate(-1); // Go back after success
         } catch (error) {
             console.error("Error updating profile:", error);
-            alert("Failed to update profile. Please try again.");
+            showError("Failed to update profile. Please try again.");
         } finally {
             setIsSubmitting(false);
         }
@@ -27,6 +30,13 @@ export const EditProfile = () => {
 
     return (
         <div className={styles.container}>
+            <Modal
+                isOpen={modalState.isOpen}
+                onClose={closeModal}
+                type={modalState.type}
+                title={modalState.title}
+                message={modalState.message}
+            />
             <header className={styles.header}>
                 <button className={styles.backButton} onClick={() => navigate(-1)}>
                     <ArrowLeft size={24} />

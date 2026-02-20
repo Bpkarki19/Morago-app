@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useUpdatePassword } from "../../hooks/useUpdatePassword";
 import { Button } from "../../components/ui/Button/Button";
 import styles from "./ChangePassword.module.css";
+import { Modal } from "../../components/ui/Modal/Modal";
 
 export const ChangePassword = () => {
     const navigate = useNavigate();
@@ -11,10 +12,17 @@ export const ChangePassword = () => {
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    const { register, onSubmit, errors, isSubmitting, serverError } = useUpdatePassword();
+    const { register, onSubmit, errors, isSubmitting, serverError, modalState, handleModalClose } = useUpdatePassword();
 
     return (
         <div className={styles.container}>
+            <Modal
+                isOpen={modalState.isOpen}
+                onClose={handleModalClose}
+                type={modalState.type}
+                title={modalState.title}
+                message={modalState.message}
+            />
             <header className={styles.header}>
                 <button className={styles.backButton} onClick={() => navigate(-1)}>
                     <ArrowLeft size={24} />

@@ -1,17 +1,19 @@
-import { User, Lock, Bell, HelpCircle, ShieldCheck, Users } from "lucide-react";
+import { User, Lock, Bell, HelpCircle, ShieldCheck, Users, LogOut } from "lucide-react";
 import styles from "./ProfilePage.module.css";
 import { useNavigate } from "react-router-dom";
 
 
 export const ProfilePage = () => {
     const navigate = useNavigate();
-
-
-
     const user = {
         name: "First and Last Name",
         phone: "010 1234 56 78",
         image: null
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/login');
     };
 
     return (
@@ -77,6 +79,12 @@ export const ProfilePage = () => {
                                 <Users size={20} />
                             </div>
                             <span className={styles.cardText}>Contact Us</span>
+                        </div>
+                        <div className={styles.cardItem}>
+                            <div className={styles.cardIcon}>
+                                <LogOut size={20} />
+                            </div>
+                            <span className={styles.cardText} onClick={handleLogout}>Logout</span>
                         </div>
                     </div>
                 </section>
