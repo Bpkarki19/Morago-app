@@ -15,7 +15,7 @@ export const LoginPage = () => {
             <header className={styles.header}>
                 <h1>Log in</h1>
                 <p>Log in to take advantage of all <br /> the app's features</p>
-                {error && <p className={styles.errorText}>{error}</p>}
+                {error && <span className={styles.errorText}>{error}</span>}
             </header>
 
             <form className={styles.form} onSubmit={onSubmit}>
@@ -51,7 +51,7 @@ export const LoginPage = () => {
                         />
 
                     </div>
-                    {errors.phone && <p className={styles.errorText}>{errors.phone.message}</p>}
+                    {errors.phone && <span className={styles.errorText}>{errors.phone.message}</span>}
                 </div>
 
                 <div className={styles.inputGroup}>
@@ -70,7 +70,7 @@ export const LoginPage = () => {
                         />
 
                     </div>
-                    {errors.password && <p className={styles.errorText}>{errors.password.message}</p>}
+                    {errors.password && <span className={styles.errorText}>{errors.password.message}</span>}
                 </div>
 
 

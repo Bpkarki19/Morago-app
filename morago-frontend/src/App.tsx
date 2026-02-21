@@ -4,11 +4,20 @@ import { OnboardingPage } from './pages/OnboardingPage/OnboardingPage';
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom'
 import { LoginPage } from './pages/LoginPage/LoginPage';
-import { HomePage } from './pages/HomePage/HomePage';
+import { ClientHomePage } from './pages/ClientHomePage/ClientHomePage';
 import { SignupPage } from './pages/SignupPage/SignupPage';
+import { TopUp } from './pages/TopUp/TopUp';
+import { ResultPage } from './pages/ResultPage/ResultPage';
+import { ProfilePage } from './pages/Profile/ProfilePage';
+import { EditProfile } from './pages/EditProfile/EditProfile';
+import { ChangePassword } from './pages/ChangePassword/ChangePassword';
+import { AvailableTranslators } from './pages/Translators/AvailableTranslators';
+import { PublicLayout } from './layouts/PublicLayout';
+import { PrivateLayout } from './layouts/PrivateLayout';
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -25,10 +34,23 @@ function App() {
   return (
     <div className='appContainer'>
       <Routes>
-        <Route path="/" element={<OnboardingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/signup" element={<SignupPage />} />
+        {/* Public Routes */}
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<OnboardingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+        </Route>
+
+        {/* Authenticated Routes */}
+        <Route element={<PrivateLayout />}>
+          <Route path="/home" element={<ClientHomePage />} />
+          <Route path="/topup" element={<TopUp />} />
+          <Route path="/result" element={<ResultPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/change-password" element={<ChangePassword />} />
+          <Route path="/available-translators" element={<AvailableTranslators />} />
+        </Route>
       </Routes>
     </div>
   )

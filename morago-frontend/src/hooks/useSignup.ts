@@ -30,7 +30,7 @@ const useSignup = () => {
         try {
             const response = await signupRequest(formData);
             localStorage.setItem("token", response.token);
-            navigate('/home')
+            navigate('/result', { state: { status: 'success', type: 'signup' } });
         } catch (err: unknown) {
             if (isAxiosError(err)) {
                 setError(err.response?.data?.message || 'Signup failed');

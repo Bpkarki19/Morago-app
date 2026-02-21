@@ -144,8 +144,10 @@ p {
 }
 
 .errorText {
-    color: red;
-    font-size: 12px;
+    display: block;
+    color: #ff0000 !important;
+    font-size: 14px;
+    font-weight: 600;
     margin-top: 4px;
     margin-bottom: 0;
 }

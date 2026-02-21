@@ -12,7 +12,7 @@ export const SignupPage = () => {
             <header className={styles.header}>
                 <h1>User <br /> Registration</h1>
                 <p>Register to access all the benefits of the app</p>
-                {error && <p className={styles.errorText}>{error}</p>}
+                {error && <span className={styles.errorText}>{error}</span>}
             </header>
 
             <form className={styles.form} onSubmit={onSubmit}>
@@ -54,7 +54,7 @@ export const SignupPage = () => {
                         />
 
                     </div>
-                    {errors.phone && <p className={styles.errorText}>{errors.phone.message}</p>}
+                    {errors.phone && <span className={styles.errorText}>{errors.phone.message}</span>}
                 </div>
 
                 <div className={styles.inputGroup}>
@@ -71,7 +71,7 @@ export const SignupPage = () => {
                             className={errors.password ? styles.error : ""}
                         />
                     </div>
-                    {errors.password && <p className={styles.errorText}>{errors.password.message}</p>}
+                    {errors.password && <span className={styles.errorText}>{errors.password.message}</span>}
                 </div>
 
                 <div className={styles.inputGroup}>
@@ -88,7 +88,7 @@ export const SignupPage = () => {
                             className={errors.confirmPassword ? styles.error : ""}
                         />
                     </div>
-                    {errors.confirmPassword && <p className={styles.errorText}>{errors.confirmPassword.message}</p>}
+                    {errors.confirmPassword && <span className={styles.errorText}>{errors.confirmPassword.message}</span>}
                 </div>
 
                 <div className={styles.actions}>
