@@ -10,6 +10,7 @@ interface LocationState {
     buttonText?: string;
     redirectPath?: string;
     type?: 'topup' | 'signup';
+    role?: 'ROLE_USER' | 'ROLE_TRANSLATOR';
 }
 
 export const ResultPage = () => {
@@ -44,7 +45,11 @@ export const ResultPage = () => {
             return;
         }
         if (isSuccess) {
-            navigate('/home');
+            if (type === 'signup' && state?.role === 'ROLE_TRANSLATOR') {
+                navigate('/translator-profile-edit');
+            } else {
+                navigate('/home');
+            }
         } else {
             navigate(-1); // Go back to previous page
         }

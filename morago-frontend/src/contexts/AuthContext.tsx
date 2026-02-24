@@ -1,35 +1,16 @@
-import { createContext, useContext, useEffect, useState } from "react";
-
-type User = {
-    id: number;
-    name: string;
-    role: string;
-}
-
-interface AuthContextType {
-    user: User | null;
-    isAuthenticated: boolean;
-    isLoading: boolean;
-    setUser: (user: User | null) => void;
-    setIsAuthenticated: (isAuthenticated: boolean) => void;
-}
-
-
-
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+import { useState } from "react";
+import { AuthContext, type User } from "./AuthContextTypes";
 
 export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
-    const [user, setUser] = useState<User | null>(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
+    const [user, setUser] = useState<User | null>(() => {
+        const role = localStorage.getItem('role');
+        return role ? { id: 0, name: "", role } : null;
+    });
+    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+        return !!localStorage.getItem('token');
+    });
+    const isLoading = false;
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setIsAuthenticated(true);
-        }
-        setIsLoading(false);
-    }, []);
 
     const value = {
         user,
@@ -44,12 +25,4 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
             {children}
         </AuthContext.Provider>
     );
-};
-
-export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error('useAuth must be used within an AuthContextProvider');
-    }
-    return context;
 };

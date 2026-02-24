@@ -18,7 +18,7 @@ export const LoginPage = () => {
                 {error && <span className={styles.errorText}>{error}</span>}
             </header>
 
-            <form className={styles.form} onSubmit={onSubmit}>
+            <form className={styles.form} onSubmit={onSubmit(role)}>
                 <div className={styles.roleSelection} role="group">
                     <Button
                         type="button"

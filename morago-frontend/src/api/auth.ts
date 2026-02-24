@@ -104,3 +104,17 @@ export const getNotificationRequest = async () => {
     });
     return response.data;
 };
+
+export const getTranslatorProfileRequest = async () => {
+    const response = await apiClient.put("/translator/switch-status");
+    return response.data;
+};
+
+export const withdrawRequest = async (accountHolder: string, nameOfBank: string, won: number) => {
+    const response = await apiClient.post("/translator/withdrawal", {
+        accountHolder,
+        nameOfBank,
+        won
+    });
+    return response.data;
+};

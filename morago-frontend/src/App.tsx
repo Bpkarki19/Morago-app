@@ -14,6 +14,9 @@ import { ChangePassword } from './pages/ChangePassword/ChangePassword';
 import { AvailableTranslators } from './pages/Translators/AvailableTranslators';
 import { PublicLayout } from './layouts/PublicLayout';
 import { PrivateLayout } from './layouts/PrivateLayout';
+import { TranslatorProfileEdit } from './pages/TranslatorProfileEdit/TranslatorProfileEdit';
+import { TranslatorHomePage } from './pages/TranslatorHome/TranslatorHomePage';
+import { WithdrawFundsPage } from './pages/TranslatorWithdrawl/WithdrawFunds';
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -50,6 +53,9 @@ function App() {
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/available-translators" element={<AvailableTranslators />} />
+          <Route path="/translator-profile-edit" element={<TranslatorProfileEdit />} />
+          <Route path="/translator-home" element={<TranslatorHomePage />} />
+          <Route path="/withdraw" element={<WithdrawFundsPage />} />
         </Route>
       </Routes>
     </div>

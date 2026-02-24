@@ -7,10 +7,12 @@ import { LoginSchema } from '../schemas/Schema';
 import { useNavigate } from 'react-router-dom';
 import { loginRequest } from '../api/auth';
 import { isAxiosError } from 'axios';
+import { useAuth } from './useAuth';
 
 export const useLogin = () => {
   // Local states for UI feedback
   const [error, setError] = useState<string | null>(null);
+  const { setIsAuthenticated, setUser } = useAuth();
   const navigate = useNavigate();
 
   // Initialize form with Zod validation and default values
@@ -27,7 +29,7 @@ export const useLogin = () => {
   });
 
   // Handle form submission logic
-  const onSubmit = async (data: LoginSchema) => {
+  const onSubmit = async (data: LoginSchema, role?: 'user' | 'translator') => {
     setError(null);//clearing old errors
 
     try {
@@ -36,9 +38,17 @@ export const useLogin = () => {
 
       // Store authentication token
       localStorage.setItem('token', response.token);
+      const normalizedRole = role === 'translator' ? 'ROLE_TRANSLATOR' : 'ROLE_USER';
+      localStorage.setItem('role', normalizedRole);
+      setIsAuthenticated(true);
+      setUser({ id: 0, name: "", role: normalizedRole });
 
-      // Redirect to home page on success
-      navigate('/home');
+      // Redirect based on role
+      if (role === 'translator') {
+        navigate('/translator-profile-edit');
+      } else {
+        navigate('/home');
+      }
     } catch (err: unknown) {
       if (isAxiosError(err)) {
         // Capture and display server-side errors
@@ -52,7 +62,7 @@ export const useLogin = () => {
   // Returning object everything the component needs
   return {
     register,
-    onSubmit: handleSubmit(onSubmit),//passing onSubmit to react hook form
+    onSubmit: (role?: 'user' | 'translator') => handleSubmit((data) => onSubmit(data, role)),
     errors,
     isSubmitting,
     error,

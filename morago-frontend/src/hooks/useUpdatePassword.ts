@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChangePasswordSchema } from '../schemas/Schema';
@@ -26,7 +26,7 @@ export const useUpdatePassword = () => {
         },
     });
 
-    const onSubmit = async (data: ChangePasswordSchema) => {
+    const onSubmit = useCallback(async (data: ChangePasswordSchema) => {
         setError(null);
         try {
             await changePasswordRequest(data);
@@ -39,7 +39,7 @@ export const useUpdatePassword = () => {
                 setError('An unexpected error occurred');
             }
         }
-    };
+    }, [showSuccess]);
 
     const handleModalClose = () => {
         closeModal();
@@ -51,7 +51,8 @@ export const useUpdatePassword = () => {
 
     return {
         register,
-        onSubmit: handleSubmit(onSubmit),
+        handleSubmit,
+        onSubmit,
         errors,
         isSubmitting,
         error,
