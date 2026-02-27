@@ -7,8 +7,9 @@ import { useTranslator } from "../../hooks/useTranslator";
 
 export const TranslatorHomePage = () => {
     const navigate = useNavigate();
-    const { translator, loading, error } = useTranslator();
+    const { translator, loading, error, balance } = useTranslator();
     console.log("translator-switch", translator);
+    console.log("translator-balance", balance);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div className={styles.serverError}>{error}</div>;
@@ -17,7 +18,7 @@ export const TranslatorHomePage = () => {
         <div className={styles.container}>
             <Header title="Translator Home" />
             <header className={styles.header}>
-                <BalanceCard onClick={() => navigate("/withdraw")} />
+                <BalanceCard balance={balance} currency="won" onClick={() => navigate("/withdraw")} />
                 <SwitchBtn initialStatus={true} onChange={(status) => console.log(status)} />
 
             </header>

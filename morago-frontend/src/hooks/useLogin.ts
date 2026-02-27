@@ -29,23 +29,32 @@ export const useLogin = () => {
   });
 
   // Handle form submission logic
-  const onSubmit = async (data: LoginSchema, role?: 'user' | 'translator') => {
+  const onSubmit = async (data: LoginSchema) => {
     setError(null);//clearing old errors
 
     try {
       // sendind data to axios
       const response = await loginRequest(data);
 
+
+      const serverRoles = response.roles;
+      const userRole = (Array.isArray(serverRoles) ? serverRoles[0] : serverRoles) || 'ROLE_USER';
+
       // Store authentication token
       localStorage.setItem('token', response.token);
-      const normalizedRole = role === 'translator' ? 'ROLE_TRANSLATOR' : 'ROLE_USER';
-      localStorage.setItem('role', normalizedRole);
+      localStorage.setItem('role', userRole);
+      localStorage.setItem('phone', data.phone);
+
+      // If response had a name, we'd save it here. For now, empty or from response.
+      const userName = response.name || "";
+      if (userName) localStorage.setItem('name', userName);
+
       setIsAuthenticated(true);
-      setUser({ id: 0, name: "", role: normalizedRole });
+      setUser({ id: 0, name: userName, role: userRole, phone: data.phone });
 
       // Redirect based on role
-      if (role === 'translator') {
-        navigate('/translator-profile-edit');
+      if (userRole === 'ROLE_TRANSLATOR') {
+        navigate('/translator-home');
       } else {
         navigate('/home');
       }
@@ -62,7 +71,7 @@ export const useLogin = () => {
   // Returning object everything the component needs
   return {
     register,
-    onSubmit: (role?: 'user' | 'translator') => handleSubmit((data) => onSubmit(data, role)),
+    onSubmit: handleSubmit(onSubmit),
     errors,
     isSubmitting,
     error,

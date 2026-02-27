@@ -44,3 +44,18 @@ export const withdrawSchema = z.object({
 });
 
 export type WithdrawSchema = z.infer<typeof withdrawSchema>;
+
+
+
+export const translatorProfileSchema = z.object({
+    firstName: z.string().min(1, "First name is required"),
+    lastName: z.string().min(1, "Last name is required"),
+    phoneNumber: phoneSchema,
+    dateOfBirth: z.string().min(1, "Date of birth is required"),
+    koreanLevel: z.preprocess((val) => Number(val), z.number().min(1).max(6)),
+    themeIds: z.array(z.number()),
+    languageIds: z.array(z.number()),
+    imageUrl: z.string().optional(),
+});
+
+export type TranslatorProfileSchema = z.infer<typeof translatorProfileSchema>;

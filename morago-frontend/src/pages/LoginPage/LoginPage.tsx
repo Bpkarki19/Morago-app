@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button } from "../../components/ui/Button/Button";
 import styles from "./LoginPage.module.css";
 import { useNavigate } from "react-router-dom";
@@ -8,8 +7,6 @@ export const LoginPage = () => {
     const { register, onSubmit, errors, isSubmitting, serverError: error } = useLogin();
     const navigate = useNavigate();
 
-    const [role, setRole] = useState<'user' | 'translator'>('user');
-
     return (
         <div className={styles.container}>
             <header className={styles.header}>
@@ -18,21 +15,8 @@ export const LoginPage = () => {
                 {error && <span className={styles.errorText}>{error}</span>}
             </header>
 
-            <form className={styles.form} onSubmit={onSubmit(role)}>
-                <div className={styles.roleSelection} role="group">
-                    <Button
-                        type="button"
-                        variant={role === 'user' ? 'orange' : 'white'}
-                        text="I am a user"
-                        onClick={() => setRole('user')}
-                    />
-                    <Button
-                        type="button"
-                        variant={role === 'translator' ? 'orange' : 'white'}
-                        text="I am a translator"
-                        onClick={() => setRole('translator')}
-                    />
-                </div>
+            <form className={styles.form} onSubmit={onSubmit}>
+
 
                 <div className={styles.inputGroup}>
                     {/* phone number */}

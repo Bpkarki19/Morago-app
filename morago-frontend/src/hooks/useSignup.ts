@@ -33,8 +33,10 @@ const useSignup = () => {
             const response = await signupRequest(formData);
             localStorage.setItem("token", response.token);
             localStorage.setItem("role", formData.role);
+            localStorage.setItem("phone", formData.phone);
+
             setIsAuthenticated(true);
-            setUser({ id: 0, name: "", role: formData.role });
+            setUser({ id: 0, name: "", role: formData.role, phone: formData.phone });
             navigate('/result', { state: { status: 'success', type: 'signup', role: formData.role } });
         } catch (err: unknown) {
             if (isAxiosError(err)) {

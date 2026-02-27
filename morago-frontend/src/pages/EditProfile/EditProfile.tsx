@@ -6,9 +6,11 @@ import { useState } from "react";
 import { updateProfileRequest } from "../../api/auth";
 import { Modal } from "../../components/ui/Modal/Modal";
 import { useModal } from "../../hooks/useModal";
+import { useAuth } from "../../hooks/useAuth";
 
 export const EditProfile = () => {
     const navigate = useNavigate();
+    const { user, setUser } = useAuth();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -19,6 +21,13 @@ export const EditProfile = () => {
         setIsSubmitting(true);
         try {
             await updateProfileRequest(firstName, lastName);
+            const fullName = `${firstName} ${lastName}`;
+            localStorage.setItem('name', fullName);
+
+            if (user) {
+                setUser({ ...user, name: fullName });
+            }
+
             navigate(-1); // Go back after success
         } catch (error) {
             console.error("Error updating profile:", error);

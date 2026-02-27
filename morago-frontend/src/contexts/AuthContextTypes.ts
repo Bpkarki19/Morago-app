@@ -4,6 +4,7 @@ export type User = {
     id: number;
     name: string;
     role: string;
+    phone: string;
 }
 
 export interface AuthContextType {

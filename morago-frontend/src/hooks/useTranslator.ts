@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { getTranslatorProfileRequest } from "../api/auth";
+import { getBalanceRequest, getTranslatorProfileRequest } from "../api/auth";
 
 export const useTranslator = () => {
     const [translator, setTranslator] = useState<unknown>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [balance, setBalance] = useState<number | string | null>(null);
 
     useEffect(() => {
         const fetchTranslator = async () => {
@@ -12,6 +13,8 @@ export const useTranslator = () => {
                 setLoading(true);
                 const data = await getTranslatorProfileRequest();
                 setTranslator(data);
+                const translatorBalance = await getBalanceRequest();
+                setBalance(translatorBalance);
             } catch {
                 setError("Failed to fetch translator profile");
             } finally {
@@ -21,5 +24,5 @@ export const useTranslator = () => {
         fetchTranslator();
     }, []);
 
-    return { translator, loading, error };
+    return { translator, loading, error, balance };
 }

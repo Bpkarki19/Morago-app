@@ -1,18 +1,18 @@
-import React from 'react';
+
 import { ChevronRight } from 'lucide-react';
 import styles from './balanceCard.module.css';
 
 interface BalanceCardProps {
-    balance?: string | number;
+    balance?: string | number | null;
     currency?: string;
     onClick?: () => void;
 }
 
-export const BalanceCard: React.FC<BalanceCardProps> = ({
-    balance = "300,000",
-    currency = "won",
+export const BalanceCard = ({
+    balance,
+    currency,
     onClick
-}) => {
+}: BalanceCardProps) => {
     return (
         <div className={styles.card} onClick={onClick}>
             <div className={styles.leftSection}>

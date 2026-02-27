@@ -9,7 +9,7 @@ export type ChangePasswordInput = z.infer<typeof ChangePasswordSchema>;
 export interface AuthResponse {
     token: string;
     message?: string;
-
+    roles?: string | string[];
 }
 
 export const loginRequest = async (credentials: LoginSchema) => {
@@ -115,6 +115,28 @@ export const withdrawRequest = async (accountHolder: string, nameOfBank: string,
         accountHolder,
         nameOfBank,
         won
+    });
+    return response.data;
+};
+
+
+export const editTranslatorProfileRequest = async (
+    firstName: string,
+    lastName: string,
+    imageUrl: string,
+    levelOfKorean: number,
+    dateOfBirth: string,
+    themeIds: number[],
+    languageIds: number[]
+) => {
+    const response = await apiClient.patch("/translator", {
+        firstName,
+        lastName,
+        imageUrl,
+        levelOfKorean,
+        dateOfBirth,
+        themeIds,
+        languageIds
     });
     return response.data;
 };

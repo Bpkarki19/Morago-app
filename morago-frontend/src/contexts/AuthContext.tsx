@@ -4,7 +4,9 @@ import { AuthContext, type User } from "./AuthContextTypes";
 export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<User | null>(() => {
         const role = localStorage.getItem('role');
-        return role ? { id: 0, name: "", role } : null;
+        const name = localStorage.getItem('name') || "";
+        const phone = localStorage.getItem('phone') || "";
+        return role ? { id: 0, name, role, phone } : null;
     });
     const [isAuthenticated, setIsAuthenticated] = useState(() => {
         return !!localStorage.getItem('token');
