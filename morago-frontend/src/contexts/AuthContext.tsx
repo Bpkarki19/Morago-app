@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AuthContext, type User } from "./AuthContextTypes";
+import { registerLogoutHandler } from "../services/authService";
 
 export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<User | null>(() => {
@@ -21,6 +22,14 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
         setUser,
         setIsAuthenticated
     };
+
+    useEffect(() => {
+        const unregister = registerLogoutHandler(() => {
+            setIsAuthenticated(false);
+            setUser(null);
+        });
+        return unregister;
+    }, []);
 
     return (
         <AuthContext.Provider value={value}>

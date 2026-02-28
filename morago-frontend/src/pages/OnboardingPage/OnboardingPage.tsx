@@ -16,7 +16,7 @@ export const OnboardingPage = () => {
                 totalSteps={slides.length}
                 decorations={slides[currentStep].decorations}
                 onStepChange={setCurrentStep}
-                onSkip={() => console.log("Skip clicked")}
+                onSkip={() => { }}
             />
 
 

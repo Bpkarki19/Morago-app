@@ -37,7 +37,6 @@ export const useClient = () => {
                 const topicsData = await getTopicsRequest();
                 setTopics(topicsData);
                 const callsData = await getRecentCallsRequest();
-                console.log('API Success - Recent Calls Data:', callsData);
                 setAllRecentCalls(callsData);
             } catch (err) {
                 console.error("API Error - Fetching dashboard failed:", err);

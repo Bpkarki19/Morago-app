@@ -28,10 +28,9 @@ export const useEditTranslatorProfile = () => {
                 data.themeIds,
                 data.languageIds
             );
-            console.log("Profile updated successfully:", response);
             return response;
-        } catch (err: unknown) {
-            const errorMessage = err.response?.data?.message || "Failed to update translator profile";
+        } catch (err) {
+            const errorMessage = (err as { response?: { data?: { message?: string } } }).response?.data?.message || "Failed to update translator profile";
             console.error("API Error:", errorMessage);
             setError(errorMessage);
             throw err;

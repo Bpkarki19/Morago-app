@@ -1,39 +1,31 @@
-import { useEffect, useState } from "react";
-import { getAvailableTranslatorsRequest } from "../api/auth";
-import { getTranslatorByIdRequest } from "../api/auth";
+import { useState, useCallback } from "react";
+import { toggleTranslatorStatusRequest } from "../api/auth";
 
 
-interface Translator {
-    id: number;
-    name: string;
-    language?: string;
-    image?: string;
-    rating?: number;
-    reviewsCount?: number;
-}
 
 export const useTranslators = () => {
-    const [translators, setTranslators] = useState<Translator[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isAvailable, setIsAvailable] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        const fetchTranslators = async () => {
-            try {
-                const id = (await getAvailableTranslatorsRequest()).content[0].id;
-                const translator = await getTranslatorByIdRequest(id);
-                setTranslators(translator);
-            } catch (error) {
-                console.error("Failed to fetch translators:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
+    const availabilityToggle = useCallback(async () => {
+        setError(null);
+        //  update status
+        setIsAvailable(prev => !prev);
 
-        fetchTranslators();
+        try {
+            await toggleTranslatorStatusRequest();
+        } catch (err) {
+            console.error("Failed to toggle status:", err);
+            setError("Failed to toggle translator status");
+            // Rollback on error
+            setIsAvailable(prev => !prev);
+            throw err;
+        }
     }, []);
 
     return {
-        translators,
-        isLoading,
+        isAvailable,
+        error,
+        availabilityToggle
     };
 };

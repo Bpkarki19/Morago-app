@@ -26,14 +26,6 @@ export const ClientHomePage = () => {
     const { defaultTopics, recentCalls, isLoading } = useClient();
     const navigate = useNavigate();
     const { balance } = useBalance();
-    console.log('defaultTopics', defaultTopics);
-    console.log('recentCalls', recentCalls);
-    console.log('balance', balance);
-
-    // Debugging: handle empty state gracefully to avoid crash
-    if (defaultTopics.length > 0) {
-        //console.log("First Topic Icon:", defaultTopics[0].iconUrl);
-    }
 
     if (isLoading) {
         return <LoadingSpinner />;

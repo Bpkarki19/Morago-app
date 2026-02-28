@@ -2,12 +2,15 @@ import AvailableTranslator from './AvailableTranslatorComponent';
 import styles from './AvailableTranslators.module.css';
 import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner';
 import { Head } from '../Head/Head';
+import { useEffect } from "react";
 import { useTranslators } from '../../hooks/useTranslators';
 
-
 export const AvailableTranslators = () => {
-    const { translators, isLoading } = useTranslators();
-    console.log('translators', translators)
+    const { translators, isLoading, fetchAvailable } = useTranslators();
+
+    useEffect(() => {
+        fetchAvailable();
+    }, [fetchAvailable]);
 
 
     if (isLoading) {
@@ -26,6 +29,8 @@ export const AvailableTranslators = () => {
                                 name={translator.name}
                                 language={translator.language}
                                 rating={translator.rating}
+
+
                                 reviewsCount={translator.reviewsCount}
                                 image={translator.image}
                             />

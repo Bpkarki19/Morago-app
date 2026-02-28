@@ -3,23 +3,28 @@ import { BalanceCard } from "../../components/ui/BalanceCard/balanceCard"
 import { SwitchBtn } from "../../components/ui/switchBtn/SwitchBtn";
 import styles from "./TranslatorHome.module.css"
 import { Header } from "../../components/ui/Header/Header";
-import { useTranslator } from "../../hooks/useTranslator";
+import { useTranslators } from "../../hooks/useTranslators";
+import { useBalance } from "../../hooks/useBalance";
 
 export const TranslatorHomePage = () => {
     const navigate = useNavigate();
-    const { translator, loading, error, balance } = useTranslator();
-    console.log("translator-switch", translator);
-    console.log("translator-balance", balance);
+    const { error, availabilityToggle, isAvailable } = useTranslators();
+    const { balance } = useBalance();
 
-    if (loading) return <div>Loading...</div>;
+
     if (error) return <div className={styles.serverError}>{error}</div>;
 
     return (
         <div className={styles.container}>
             <Header title="Translator Home" />
             <header className={styles.header}>
+                {/* Balance is fetched from api  */}
                 <BalanceCard balance={balance} currency="won" onClick={() => navigate("/withdraw")} />
-                <SwitchBtn initialStatus={true} onChange={(status) => console.log(status)} />
+                {/* Availability */}
+                <SwitchBtn
+                    isAvailable={isAvailable}
+                    onChange={() => availabilityToggle()}
+                />
 
             </header>
 

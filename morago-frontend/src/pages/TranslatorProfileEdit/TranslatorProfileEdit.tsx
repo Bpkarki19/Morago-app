@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { User, Camera, Phone, Calendar, Info, Check } from "lucide-react";
 import { Button } from "../../components/ui/Button/Button";
 import styles from "./TranslatorProfileEdit.module.css";
@@ -6,53 +6,78 @@ import { useNavigate } from "react-router-dom";
 import { Header } from "../../components/ui/Header/Header";
 import { useEditTranslatorProfile } from "../../hooks/useEditTranslatorProfile";
 import { useClient } from "../../hooks/useClient";
+import { useLanguages } from "../../hooks/useLanguages";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { translatorProfileSchema, type TranslatorProfileSchema } from "../../schemas/Schema";
 
 export const TranslatorProfileEdit = () => {
     const navigate = useNavigate();
     const { updateProfile, isLoading, error: profileError } = useEditTranslatorProfile();
     const { defaultTopics, isLoading: loadingTopics } = useClient();
 
-    // Form states
-    const [profileImage, setProfileImage] = useState<string | null>(null);
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [dateOfBirth, setDateOfBirth] = useState("");
-    const [koreanLevel, setKoreanLevel] = useState("");
-    const [selectedThemeIds, setSelectedThemeIds] = useState<number[]>([]);
-    const [selectedLanguageIds, setSelectedLanguageIds] = useState<number[]>([]);
+    const { languages, isLoading: loadingLanguages, error: languageError } = useLanguages();
 
-    const languages = [
-        { id: 1, name: "Russian" },
-        { id: 2, name: "Kazakh" },
-        { id: 3, name: "Uzbek" },
-        { id: 4, name: "English" },
-        { id: 5, name: "Tajik" }
-    ];
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        watch,
+        formState: { errors }
+    } = useForm<TranslatorProfileSchema>({
+        resolver: zodResolver(translatorProfileSchema) as unknown as any,//due to zod and react-hook-form compatibility issue
+        defaultValues: {
+            firstName: "",
+            lastName: "",
+            dateOfBirth: "",
+            phoneNumber: "",
+            levelOfKorean: 1,
+            themeIds: [],
+            languageIds: [],
+            imageUrl: "",
+
+        }
+    });
+
+    const profileImage = watch("imageUrl");
+    const selectedThemeIds = watch("themeIds") || [];
+    const selectedLanguageIds = watch("languageIds") || [];
 
     const toggleTheme = (id: number) => {
-        setSelectedThemeIds(prev =>
-            prev.includes(id) ? prev.filter(tId => tId !== id) : [...prev, id]
-        );
+        if (selectedThemeIds.includes(id)) {
+            setValue("themeIds", selectedThemeIds.filter(t => t !== id));
+        } else {
+            setValue("themeIds", [...selectedThemeIds, id]);
+        }
     };
 
     const toggleLanguage = (id: number) => {
-        setSelectedLanguageIds(prev =>
-            prev.includes(id) ? prev.filter(lId => lId !== id) : [...prev, id]
-        );
+        if (selectedLanguageIds.includes(id)) {
+            setValue("languageIds", selectedLanguageIds.filter(l => l !== id));
+        } else {
+            setValue("languageIds", [...selectedLanguageIds, id]);
+        }
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const onSubmit = async (data: TranslatorProfileSchema) => {
         try {
+            const {
+                firstName,
+                lastName,
+                imageUrl,
+                levelOfKorean,
+                dateOfBirth,
+                themeIds,
+                languageIds
+            } = data;
             await updateProfile({
                 firstName,
                 lastName,
-                imageUrl: profileImage || "",
-                levelOfKorean: parseInt(koreanLevel) || 1,
+                imageUrl: imageUrl || "",
+                levelOfKorean,
                 dateOfBirth,
-                themeIds: selectedThemeIds,
-                languageIds: selectedLanguageIds
+                themeIds,
+                languageIds
             });
             navigate("/translator-home");
         } catch (err) {
@@ -90,7 +115,8 @@ export const TranslatorProfileEdit = () => {
                                 if (file) {
                                     const reader = new FileReader();
                                     reader.onloadend = () => {
-                                        setProfileImage(reader.result as string);
+                                        const dataUrl = reader.result as string;
+                                        setValue("imageUrl", dataUrl);
                                     };
                                     reader.readAsDataURL(file);
                                 }
@@ -102,7 +128,7 @@ export const TranslatorProfileEdit = () => {
 
             {profileError && <p className={styles.errorText}>{profileError}</p>}
 
-            <form className={styles.form} onSubmit={handleSubmit}>
+            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.inputGroup}>
                     <label>First name</label>
                     <div className={styles.inputWrapper}>
@@ -110,11 +136,10 @@ export const TranslatorProfileEdit = () => {
                         <input
                             type="text"
                             placeholder="Enter your first name"
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
-                            required
+                            {...register("firstName")}
                         />
                     </div>
+                    {errors.firstName && <p className={styles.errorText}>{errors.firstName.message}</p>}
                 </div>
 
                 <div className={styles.inputGroup}>
@@ -124,11 +149,10 @@ export const TranslatorProfileEdit = () => {
                         <input
                             type="text"
                             placeholder="Enter your last name"
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
-                            required
+                            {...register("lastName")}
                         />
                     </div>
+                    {errors.lastName && <p className={styles.errorText}>{errors.lastName.message}</p>}
                 </div>
 
                 <div className={styles.inputGroup}>
@@ -138,11 +162,10 @@ export const TranslatorProfileEdit = () => {
                         <input
                             type="text"
                             placeholder="010 1234 56 78"
-                            value={phoneNumber}
-                            onChange={(e) => setPhoneNumber(e.target.value)}
-                            required
+                            {...register("phoneNumber")}
                         />
                     </div>
+                    {errors.phoneNumber && <p className={styles.errorText}>{errors.phoneNumber.message}</p>}
                 </div>
 
                 <div className={styles.inputGroup}>
@@ -151,11 +174,10 @@ export const TranslatorProfileEdit = () => {
                         <Calendar className={styles.inputIcon} size={20} />
                         <input
                             type="date"
-                            value={dateOfBirth}
-                            onChange={(e) => setDateOfBirth(e.target.value)}
-                            required
+                            {...register("dateOfBirth")}
                         />
                     </div>
+                    {errors.dateOfBirth && <p className={styles.errorText}>{errors.dateOfBirth.message}</p>}
                 </div>
 
                 <div className={styles.inputGroup}>
@@ -167,11 +189,10 @@ export const TranslatorProfileEdit = () => {
                             min="1"
                             max="6"
                             placeholder="Enter your Korean level (1-6)"
-                            value={koreanLevel}
-                            onChange={(e) => setKoreanLevel(e.target.value)}
-                            required
+                            {...register("levelOfKorean", { valueAsNumber: true })}
                         />
                     </div>
+                    {errors.levelOfKorean && <p className={styles.errorText}>{errors.levelOfKorean.message}</p>}
                 </div>
 
                 <div className={styles.section}>
@@ -199,15 +220,21 @@ export const TranslatorProfileEdit = () => {
                 <div className={styles.section}>
                     <h2 className={styles.sectionTitle}>Available translation languages</h2>
                     <div className={styles.tagsContainer}>
-                        {languages.map((lang) => (
-                            <span
-                                key={lang.id}
-                                className={`${styles.tag} ${selectedLanguageIds.includes(lang.id) ? styles.activeTag : ""}`}
-                                onClick={() => toggleLanguage(lang.id)}
-                            >
-                                {lang.name}
-                            </span>
-                        ))}
+                        {loadingLanguages ? (
+                            <p>Loading languages...</p>
+                        ) : languageError ? (
+                            <p className={styles.errorText}>Failed to load languages</p>
+                        ) : (
+                            languages.map((lang) => (
+                                <span
+                                    key={lang.id}
+                                    className={`${styles.tag} ${selectedLanguageIds.includes(lang.id) ? styles.activeTag : ""}`}
+                                    onClick={() => toggleLanguage(lang.id)}
+                                >
+                                    {lang.name}
+                                </span>
+                            ))
+                        )}
                     </div>
                 </div>
 
