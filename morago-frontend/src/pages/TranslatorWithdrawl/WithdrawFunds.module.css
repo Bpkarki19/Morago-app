@@ -1,0 +1,173 @@
+.container {
+    padding: 24px 20px;
+    background-color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.backButton {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.backButton:hover {
+    background-color: #f8fafc;
+}
+
+.titleSection {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+}
+
+.description {
+    font-size: 14px;
+    color: #94a3b8;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.labelRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.balanceLabel {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.inputIcon {
+    position: absolute;
+    left: 16px;
+    color: #94a3b8;
+}
+
+.chevronIcon {
+    position: absolute;
+    right: 16px;
+    color: #94a3b8;
+    pointer-events: none;
+}
+
+.input {
+    width: 100%;
+    padding: 16px 16px 16px 48px;
+    border: 1px solid #f1f5f9;
+    border-radius: 16px;
+    font-size: 15px;
+    color: #1e293b;
+    background-color: #fff;
+    transition: all 0.2s;
+    outline: none;
+}
+
+.input:focus {
+    border-color: #fb923c;
+    box-shadow: 0 0 0 4px rgba(251, 146, 60, 0.1);
+}
+
+.input::placeholder {
+    color: #cbd5e1;
+}
+
+.selectInput {
+    appearance: none;
+    cursor: pointer;
+}
+
+.withdrawButton {
+    margin-top: 16px;
+    padding: 18px !important;
+    border-radius: 30px !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    background-color: #fb923c !important;
+    color: #fff !important;
+    border: none !important;
+    width: 100% !important;
+    transition: all 0.2s !important;
+}
+
+.withdrawButton:hover {
+    background-color: #f97316 !important;
+    transform: translateY(-1px);
+}
+
+.withdrawButton:active {
+    transform: translateY(0);
+}
+
+.supportLink {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    margin-top: auto;
+    padding-bottom: 20px;
+    cursor: pointer;
+}
+
+.supportLink:hover {
+    color: #64748b;
+}
+
+.errorMessage {
+    color: #ef4444;
+    font-size: 12px;
+    margin-top: 4px;
+    padding-left: 4px;
+}
+
+.serverError {
+    color: #ef4444;
+    background-color: #fef2f2;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+}

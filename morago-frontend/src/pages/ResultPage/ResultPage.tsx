@@ -1,6 +1,7 @@
 import { Button } from '../../components/ui/Button/Button';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Check, X, Wallet, UserCircle } from 'lucide-react';
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import { Check, X, Wallet, UserCircle } from "lucide-react";
 import styles from './ResultPage.module.css';
 
 interface LocationState {
@@ -10,6 +11,7 @@ interface LocationState {
     buttonText?: string;
     redirectPath?: string;
     type?: 'topup' | 'signup';
+    role?: 'ROLE_USER' | 'ROLE_TRANSLATOR';
 }
 
 export const ResultPage = () => {
@@ -38,13 +40,26 @@ export const ResultPage = () => {
         return isSuccess ? 'Great!' : 'Try Again';
     };
 
+    const { user } = useAuth();
+
     const handleButtonClick = () => {
         if (state?.redirectPath) {
             navigate(state.redirectPath);
             return;
         }
+
         if (isSuccess) {
-            navigate('/home');
+            if (type === 'signup') {
+                if (state?.role === 'ROLE_TRANSLATOR') {
+                    navigate('/translator-profile-edit');
+                } else {
+                    navigate('/home');
+                }
+            } else {
+                // Default redirection based on current role
+                const homePath = user?.role === 'ROLE_TRANSLATOR' ? '/translator-home' : '/home';
+                navigate(homePath);
+            }
         } else {
             navigate(-1); // Go back to previous page
         }

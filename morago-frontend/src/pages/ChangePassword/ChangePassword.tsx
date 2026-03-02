@@ -12,7 +12,7 @@ export const ChangePassword = () => {
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    const { register, onSubmit, errors, isSubmitting, serverError, modalState, handleModalClose } = useUpdatePassword();
+    const { register, handleSubmit, onSubmit, errors, isSubmitting, serverError, modalState, handleModalClose } = useUpdatePassword();
 
     return (
         <div className={styles.container}>
@@ -32,7 +32,7 @@ export const ChangePassword = () => {
 
             {serverError && <div className={styles.errorText} style={{ textAlign: 'center', marginBottom: '10px' }}>{serverError}</div>}
 
-            <form className={styles.form} onSubmit={onSubmit}>
+            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 {/* Current Password */}
                 <div className={styles.inputGroup}>
                     <div className={styles.labelRow}>

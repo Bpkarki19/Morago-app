@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { logout } from "../services/authService";
 
 const apiClient = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
@@ -27,9 +27,8 @@ apiClient.interceptors.response.use(
     },
     (error) => {
         if (error.response && error.response.status === 401) {
-            // Clear token and redirect to login if unauthorized
-            localStorage.removeItem("token");
-            window.location.href = "/login";
+            // Clear token and notify app to update auth state 
+            logout();
         }
         return Promise.reject(error);
     }

@@ -14,6 +14,10 @@ import { ChangePassword } from './pages/ChangePassword/ChangePassword';
 import { AvailableTranslators } from './pages/Translators/AvailableTranslators';
 import { PublicLayout } from './layouts/PublicLayout';
 import { PrivateLayout } from './layouts/PrivateLayout';
+import { TranslatorProfileEdit } from './pages/TranslatorProfileEdit/TranslatorProfileEdit';
+import { TranslatorHomePage } from './pages/TranslatorHome/TranslatorHomePage';
+import { WithdrawFundsPage } from './pages/TranslatorWithdrawl/WithdrawFunds';
+import { RoleProtectedRoute } from './components/RoleProtectedRoute';
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -43,13 +47,25 @@ function App() {
 
         {/* Authenticated Routes */}
         <Route element={<PrivateLayout />}>
-          <Route path="/home" element={<ClientHomePage />} />
-          <Route path="/topup" element={<TopUp />} />
+          {/* Shared Authenticated Routes */}
           <Route path="/result" element={<ResultPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/change-password" element={<ChangePassword />} />
-          <Route path="/available-translators" element={<AvailableTranslators />} />
+
+          {/* Client Only Routes */}
+          <Route element={<RoleProtectedRoute allowedRoles={['ROLE_USER']} />}>
+            <Route path="/home" element={<ClientHomePage />} />
+            <Route path="/topup" element={<TopUp />} />
+            <Route path="/available-translators" element={<AvailableTranslators />} />
+          </Route>
+
+          {/* Translator Only Routes */}
+          <Route element={<RoleProtectedRoute allowedRoles={['ROLE_TRANSLATOR']} />}>
+            <Route path="/translator-home" element={<TranslatorHomePage />} />
+            <Route path="/withdraw" element={<WithdrawFundsPage />} />
+            <Route path="/translator-profile-edit" element={<TranslatorProfileEdit />} />
+          </Route>
         </Route>
       </Routes>
     </div>

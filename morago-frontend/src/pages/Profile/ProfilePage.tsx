@@ -1,18 +1,34 @@
 import { User, Lock, Bell, HelpCircle, ShieldCheck, Users, LogOut } from "lucide-react";
 import styles from "./ProfilePage.module.css";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 
 export const ProfilePage = () => {
     const navigate = useNavigate();
+    const { user: authUser, setIsAuthenticated, setUser } = useAuth();
     const user = {
-        name: "First and Last Name",
-        phone: "010 1234 56 78",
-        image: null
+        name: authUser?.name || "First and Last Name",
+        phone: authUser?.phone || "No phone available",
+        image: null,
+        role: authUser?.role
+    };
+
+    const handleEditProfile = () => {
+        if (user.role === 'ROLE_TRANSLATOR') {
+            navigate('/translator-profile-edit');
+        } else {
+            navigate('/edit-profile');
+        }
     };
 
     const handleLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        localStorage.removeItem('name');
+        localStorage.removeItem('phone');
+        setIsAuthenticated(false);
+        setUser(null);
         navigate('/login');
     };
 
@@ -35,7 +51,9 @@ export const ProfilePage = () => {
                             <h2>{user.name}</h2>
                             <p>{user.phone}</p>
                         </div>
-                        <button className={styles.editButton} onClick={() => navigate('/edit-profile')}>Edit</button>
+                        {(user.role === 'ROLE_USER' || user.role === 'ROLE_TRANSLATOR') && (
+                            <button className={styles.editButton} onClick={handleEditProfile}>Edit</button>
+                        )}
                     </div>
                 </div>
             </header>

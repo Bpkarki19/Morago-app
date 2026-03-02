@@ -7,10 +7,12 @@ import { LoginSchema } from '../schemas/Schema';
 import { useNavigate } from 'react-router-dom';
 import { loginRequest } from '../api/auth';
 import { isAxiosError } from 'axios';
+import { useAuth } from './useAuth';
 
 export const useLogin = () => {
   // Local states for UI feedback
   const [error, setError] = useState<string | null>(null);
+  const { setIsAuthenticated, setUser } = useAuth();
   const navigate = useNavigate();
 
   // Initialize form with Zod validation and default values
@@ -34,11 +36,28 @@ export const useLogin = () => {
       // sendind data to axios
       const response = await loginRequest(data);
 
+
+      const serverRoles = response.roles;
+      const userRole = (Array.isArray(serverRoles) ? serverRoles[0] : serverRoles) || 'ROLE_USER';
+
       // Store authentication token
       localStorage.setItem('token', response.token);
+      localStorage.setItem('role', userRole);
+      localStorage.setItem('phone', data.phone);
 
-      // Redirect to home page on success
-      navigate('/home');
+      // If response had a name, we'd save it here. For now, empty or from response.
+      const userName = response.name || "";
+      if (userName) localStorage.setItem('name', userName);
+
+      setIsAuthenticated(true);
+      setUser({ id: 0, name: userName, role: userRole, phone: data.phone });
+
+      // Redirect based on role
+      if (userRole === 'ROLE_TRANSLATOR') {
+        navigate('/translator-home');
+      } else {
+        navigate('/home');
+      }
     } catch (err: unknown) {
       if (isAxiosError(err)) {
         // Capture and display server-side errors
@@ -52,7 +71,7 @@ export const useLogin = () => {
   // Returning object everything the component needs
   return {
     register,
-    onSubmit: handleSubmit(onSubmit),//passing onSubmit to react hook form
+    onSubmit: handleSubmit(onSubmit),
     errors,
     isSubmitting,
     error,

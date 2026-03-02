@@ -5,9 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { SignupSchema } from "../schemas/Schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useAuth } from "./useAuth";
 
 const useSignup = () => {
     const [error, setError] = useState<string | null>(null);
+    const { setIsAuthenticated, setUser } = useAuth();
     const navigate = useNavigate();
 
     const {
@@ -30,7 +32,12 @@ const useSignup = () => {
         try {
             const response = await signupRequest(formData);
             localStorage.setItem("token", response.token);
-            navigate('/result', { state: { status: 'success', type: 'signup' } });
+            localStorage.setItem("role", formData.role);
+            localStorage.setItem("phone", formData.phone);
+
+            setIsAuthenticated(true);
+            setUser({ id: 0, name: "", role: formData.role, phone: formData.phone });
+            navigate('/result', { state: { status: 'success', type: 'signup', role: formData.role } });
         } catch (err: unknown) {
             if (isAxiosError(err)) {
                 setError(err.response?.data?.message || 'Signup failed');

@@ -9,9 +9,10 @@ export type ChangePasswordInput = z.infer<typeof ChangePasswordSchema>;
 export interface AuthResponse {
     token: string;
     message?: string;
-
+    roles?: string | string[];
 }
 
+//---------------------------------------CLIENT------------------------------------------------------------------
 export const loginRequest = async (credentials: LoginSchema) => {
     // Axios returns the data directly in the 'data' property
     const response = await apiClient.post("/auth/login", credentials);
@@ -55,6 +56,7 @@ export const changePasswordRequest = async (credentials: ChangePasswordSchema) =
     return response.data;
 };
 
+
 export const getAvailableTranslatorsRequest = async () => {
     const response = await apiClient.get("/user/translators",
         {
@@ -69,10 +71,12 @@ export const getAvailableTranslatorsRequest = async () => {
     return response.data;
 };
 
+
 export const getTranslatorByIdRequest = async (id: number) => {
     const response = await apiClient.get(`/user/translators/${id}`);
     return response.data;
 };
+
 
 export const postDepositRequest = async (accountHolder: string, nameOfBank: string, won: number) => {
     const response = await apiClient.post("/user/deposit", {
@@ -83,10 +87,12 @@ export const postDepositRequest = async (accountHolder: string, nameOfBank: stri
     return response.data;
 };
 
+
 export const getBalanceRequest = async () => {
     const response = await apiClient.get("/profile/balance");
     return response.data;
 };
+
 
 export const updateProfileRequest = async (firstName: string, lastName: string) => {
     const response = await apiClient.put("/user", { firstName, lastName });
@@ -104,3 +110,51 @@ export const getNotificationRequest = async () => {
     });
     return response.data;
 };
+
+//----------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------TRANSLATOR-------------------------------------------------------
+
+export const toggleTranslatorStatusRequest = async () => {
+    const response = await apiClient.put("/translator/switch-status");
+    return response.data;
+};
+
+
+
+
+export const withdrawRequest = async (accountHolder: string, nameOfBank: string, won: number) => {
+    const response = await apiClient.post("/translator/withdrawal", {
+        accountHolder,
+        nameOfBank,
+        won
+    });
+    return response.data;
+};
+
+
+export const editTranslatorProfileRequest = async (
+    firstName: string,
+    lastName: string,
+    imageUrl: string,
+    levelOfKorean: number,
+    dateOfBirth: string,
+    themeIds: number[],
+    languageIds: number[]
+) => {
+    const response = await apiClient.patch("/translator", {
+        firstName,
+        lastName,
+        imageUrl,
+        levelOfKorean,
+        dateOfBirth,
+        themeIds,
+        languageIds
+    });
+    return response.data;
+};
+
+
+export const getLanguageRequest = async () => {
+    const response = await apiClient.get("/api/languages");
+    return response.data;
+}
